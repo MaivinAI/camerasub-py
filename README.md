@@ -24,16 +24,6 @@ python dmaSub.py [-h] [-c CONNECT] [-t TIME] [topic]
 - `-t TIME, --time TIME`: Time to run the subscriber before exiting. Default is 5 seconds.
 - `topic`: The topic to which to subscribe. Default is 'rt/camera/dma'.
 
-## Dependencies
-
-The script relies on the following Python libraries:
-
-- `zenoh`: For communication with Zenoh.
-- `PIL`: For image processing.
-- `numpy`: For numerical computing.
-- `deepview`: For handling deep learning related functionalities.
-- `edgefirst`: For message serialization.
-
 # License
 
 This project is licensed under the AGPL-3.0 or under the terms of the DeepView AI Middleware Commercial License.
