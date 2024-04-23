@@ -1,5 +1,5 @@
 pillow
 eclipse-zenoh
 vaal
-deepview
+deepview-rt
 numpy
