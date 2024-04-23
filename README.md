@@ -24,6 +24,16 @@ python dmaSub.py [-h] [-c CONNECT] [-t TIME] [topic]
 - `-t TIME, --time TIME`: Time to run the subscriber before exiting. Default is 5 seconds.
 - `topic`: The topic to which to subscribe. Default is 'rt/camera/dma'.
 
+There is also a dockerfile which goes over how to use the sample using a docker container, the container is self contained and should include all the dependencies inside the container it self. However as the sample requires access to the board resources it need to run as follow:
+```
+docker run -it --privileged --pid=host --network=host --entrypoint bash <NAME_OF_CONTAINER>
+```
+
+The container need to be built and hosted by the user and can be done using:
+```
+docker build . -f Dockerfile --platform linux/arm64/v8 --tag <NAME_OF_CONTAINER>
+```
+
 # License
 
 This project is licensed under the AGPL-3.0 or under the terms of the DeepView AI Middleware Commercial License.
