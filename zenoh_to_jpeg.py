@@ -6,8 +6,7 @@ from argparse import ArgumentParser
 import av  
 from PIL import Image, ImageDraw  
 
-# Import ImageAnnotation schema from edgefirst package
-from edgefirst.schemas.ImageAnnotation import ImageAnnotation as Boxes
+from edgefirst.schemas.foxglove_msgs import ImageAnnotations as Boxes # Import ImageAnnotation schema from edgefirst package
 import zenoh  # Zenoh library for distributed systems
 
 # Define the encoding prefix for zenoh
@@ -91,8 +90,8 @@ def main():
         session.close()
     atexit.register(_on_exit)  # Register exit handler
 
-    session.declare_subscriber("rt/camera/h264", message_callback)  # Subscriber for camera frames
-    session.declare_subscriber("rt/detect/boxes2d", detect_message_callback)  # Subscriber for detection messages
+    camera_sub = session.declare_subscriber("rt/camera/h264", message_callback)  # Subscriber for camera frames
+    detect_sub = session.declare_subscriber("rt/detect/boxes2d", detect_message_callback)  # Subscriber for detection messages
     
     time.sleep(args.time) # Block the main thread to keep the program running 
 
