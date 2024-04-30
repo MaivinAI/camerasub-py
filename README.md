@@ -1,6 +1,8 @@
 # DMA Buffer to JPEG Converter
 
-This script demonstrates how to subscribe to DMA topic and process received messages containing image data and storing to JPEG. More documentation can be found [here](https://support.deepviewml.com/hc/en-us/articles/26118202550925-DMA-Buffer-to-JPEG-From-Python)
+This project demonstrates how to subscribe to DMA, H264 and Detect topic and process received messages containing image and boxes data and storing to JPEG. More documentation can be found [here](https://support.deepviewml.com/hc/en-us/articles/26118202550925-DMA-Buffer-to-JPEG-From-Python)
+
+Refer to [Maivin EdgeFirst Schemas](https://github.com/MaivinAI/schemas) for an overview of the services and their schemas used by this example project.
 
 ## Prerequisites
 
@@ -33,6 +35,17 @@ The container need to be built and hosted by the user and can be done using:
 ```
 docker build . -f Dockerfile --platform linux/arm64/v8 --tag <NAME_OF_CONTAINER>
 ```
+
+Run the script `zenoh_to_jpeg.py` with the following command-line arguments:
+
+```
+python zenoh_to_jpeg.py [-h] [-c CONNECT] [-t TIME]
+```
+
+- `-h, --help`: Show the help message and exit.
+- `-c CONNECT, --connect CONNECT`: Connection point for the Zenoh session. Default is 'tcp/127.0.0.1:7447'.
+- `-t TIME, --time TIME`: Time to run the subscriber before exiting. Default is 5 seconds.
+
 
 # License
 

@@ -33,10 +33,11 @@ def parse_args():
 def get_jpeg_from_fd(dma):
     pidfd = os.pidfd_open(dma.pid)  # Opening a file descriptor for the process ID
     ret = libc.syscall(SYS_pidfd_getfd, pidfd, dma.fd, 0)  # Invoking the syscall to get the file descriptor
-    ctx.load_frame(dma.width, dma.height, dma.fourcc, ret, tensor)  # Loading frame data into the Tensor object
-    numpy_array = np.clip(tensor.array(), 0, 255).astype(np.uint8)  # Clipping and converting Tensor array to numpy array
-    mcap_image = Image.fromarray(numpy_array)  # Creating an image object from the numpy array
-    mcap_image.save("output.jpg", format="JPEG", quality=100)  # Saving the image as JPEG format to output.jpg
+    if ret != -1:
+        ctx.load_frame(dma.width, dma.height, dma.fourcc, ret, tensor)  # Loading frame data into the Tensor object
+        numpy_array = np.clip(tensor.array(), 0, 255).astype(np.uint8)  # Clipping and converting Tensor array to numpy array
+        mcap_image = Image.fromarray(numpy_array)  # Creating an image object from the numpy array
+        mcap_image.save("output.jpg", format="JPEG", quality=100)  # Saving the image as JPEG format to output.jpg
 
 # Defining a function to handle received messages
 def message_callback(msg): 

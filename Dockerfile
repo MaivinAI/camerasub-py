@@ -1,5 +1,5 @@
 # Use the base image maivin/gstreamer:bullseye with the ARM64 architecture
-FROM --platform=linux/arm64/v8 maivin/gstreamer:bullseye AS builderz
+FROM --platform=linux/arm64/v8 maivin/gstreamer:bullseye
 
 # Update the package index and install required packages
 RUN apt-get update && \
