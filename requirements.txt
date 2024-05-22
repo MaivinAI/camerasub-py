@@ -3,4 +3,4 @@ eclipse-zenoh
 vaal
 deepview-rt
 numpy
-edgefirst-schemas==1.1.1
+git+https://github.com/MaivinAI/schemas.git@python-unified-modules

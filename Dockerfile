@@ -9,15 +9,8 @@ RUN apt-get update && \
     build-essential \
     zlib1g-dev \
     libssl-dev \
-    libffi-dev
-
-WORKDIR /work  
-RUN wget https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz
-RUN tar -xvf Python-3.10.0.tgz
-RUN cd Python-3.10.0
-RUN Python-3.10.0/configure --enable-optimizations
-RUN make -j$(nproc)
-RUN make install
+    libffi-dev \
+    git
 
 # Download the repository key
 RUN wget https://deepviewml.com/apt/key.pub 
@@ -30,6 +23,8 @@ RUN echo "deb https://deepviewml.com/apt stable main" > /etc/apt/sources.list.d/
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     libg2d-viv \
+    python3 \
+    python3-pip \
     visionpack
 
 # Set the working directory to /work
@@ -39,7 +34,7 @@ WORKDIR /app
 COPY . .
 
 # Install Python dependencies listed in requirements.txt using pip
-RUN pip3 install -r requirements.txt
+RUN pip install --break-system-packages -r requirements.txt
 ENV VAAL_LIBRARY=/usr/lib/aarch64-linux-gnu/libvaal.so
 # Set the entry point for the Docker container to execute the Python script dmaSub.py
 ENTRYPOINT [ "python3", "dmaSub.py" ]

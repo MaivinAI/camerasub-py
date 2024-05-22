@@ -10,7 +10,7 @@ import numpy as np
 
 import deepview.vaal as vaal  # Importing vaal module from deepview package
 from deepview.rt.tensor import Tensor  # Importing Tensor class from deepview package
-from edgefirst.schemas.edgefirst_msgs.DmaBuffer import DmaBuffer as buf  # Importing DmaBuffer schema from edgefirst package for message serialization
+from edgefirst.schemas.edgefirst_msgs import DmaBuffer as buf  # Importing DmaBuffer schema from edgefirst package for message serialization
 
 SYS_pidfd_getfd = 438  # Assigning the syscall number for pidfd_open to a constant variable
 libc = ctypes.CDLL(None, use_errno=True)  # Loading the C standard library
