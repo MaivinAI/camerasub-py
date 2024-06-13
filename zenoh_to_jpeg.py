@@ -26,7 +26,7 @@ def parse_args():
     parser.add_argument('-c', '--connect', type=str, default='tcp/127.0.0.1:7447',
                         help="Connection point for the zenoh session, default='tcp/127.0.0.1:7447'")
     parser.add_argument('-t', '--time', type=float, default=5,
-                        help="Time to run the subscriber before exiting.")
+                        help="Timeout for the subscriber before exiting.")
     return parser.parse_args()
 
 # Callback function to handle incoming video frame messages
@@ -49,7 +49,6 @@ def message_callback(msg):
                 img.save("output.jpg", format="JPEG", quality=100)  # Save image to file
                 mcap_image = img  # Store image frame
         except Exception as e:  # Handle exceptions
-            print(f"Error processing packet: {e}")
             continue  # Continue processing next packets
 
 # Callback function to handle detection messages
@@ -81,13 +80,11 @@ def detect_message_callback(msg):
             y = int((points.center_y - points.height / 2) * frame_height/scale)
             w = int(points.width * frame_width/scale)
             h = int(points.height * frame_height/scale)
-            
             draw.rectangle([(x, y), (x + w, y + h)], outline=(255, 0, 0), width=2) # Draw bounding box on image
-    
-    # Save image with bounding boxes
-    img.save("output_with_boxes.jpg", format="JPEG", quality=100)
     global exit_flag
     if not exit_flag:
+        # Save image with bounding boxes
+        img.save("output_with_boxes.jpg", format="JPEG", quality=100)
         print("Trying to exit might take a few seconds....")
         exit_flag = True
     exit_event.set()  # Signal the main thread to exit
@@ -104,6 +101,8 @@ def main():
         print("Output image with boxes saved.")
         session.close()
     atexit.register(_on_exit)  # Register exit handler
+    
+    print("Getting frame....")
 
     camera_sub = session.declare_subscriber("rt/camera/h264", message_callback)  # Subscriber for camera frames
     detect_sub = session.declare_subscriber("rt/detect/boxes2d", detect_message_callback)  # Subscriber for detection messages
