@@ -18,7 +18,7 @@ pip install -r requirements.txt
 Run the script `dmaSub.py` with the following command-line arguments:
 
 ```
-python dmaSub.py [-h] [-c CONNECT] [-t TIME] [topic]
+sudo -E python dmaSub.py [-h] [-c CONNECT] [-t TIME] [topic]
 ```
 
 - `-h, --help`: Show the help message and exit.
